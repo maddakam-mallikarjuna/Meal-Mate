@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'Admin_app/css/AddRestaurants.css' %}">
+    <title>Add Restaurant</title>
+</head>
+<body>
+    <div class="form-container">
+        <form action="{% url 'editmenuitems' userid restaurantid item.id %}" method="post">
+            {% csrf_token %}
+            <h2>Add New Menu Item</h2>
+            <div class="form-group">
+                <label for="itemname">Item Name:</label>
+                <input type="text" name="itemname" title="Enter Your Item Name" value="{{ item.itemname }}" required>
+            </div>
+            <div class="form-group">
+                <label for="itemdescription">Item Description:</label>
+                <input type="text" name="itemdescription" title="Enter Your Item Description" value="{{ item.itemdescription }}" required>
+            </div>
+            <div class="form-group">
+                <label for="itemimage">Item Image:</label>
+                <input type="text" name="itemimage" title="Enter your Item Image Url"  value="{{ item.itemimage }}" required>
+            </div>
+            <div class="form-group">
+                <label for="itemcusine">ItemCuisine:</label>
+                <input type="text" name="itemcusine" title="Enter Cusins/ Styles" value="{{ item.itemstyles }}" required>
+            </div>
+            <div class="form-group">
+                <label for="itemprice">Item Price:</label>
+                <input type="number" name="itemprice" title="Enter Your Item Price" min="0.1" max="999999999" step="0.1" value="{{ item.itemprice }}"  required>
+            </div>
+            <div class="form-group">
+                <label for="itemdiscount">Item Discount:</label>
+                <input type="number" name="itemdiscount" title="Enter Your Item Price" min="0" max="99.99" step="0.1" value="{{ item.itemdiscount }}" required>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

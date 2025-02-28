@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal-Mate</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'User_app/css/ViewMenu.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo-container">
+            <img src="{% static 'images/Screenshot 2025-01-23 063742.ico' %}" alt="Logo" class="logo">
+        </div>
+        <span class="brand">Meal-Mate</span>
+        <div class="cart-section">
+            <a href="{% url 'viewmycart' userid %}"><img id="cart-icon" src="{% static 'images/shopping-cart-empty.png' %}" alt="Cart"></a>
+        </div>
+        <a href="{% url 'Login' %}" class="logout">Logout</a>
+    </nav>
+    
+    <div class="container">
+        <!-- Menu Items on the Left -->
+        <main class="menu-items">
+            {% for item in items %}
+            <div class="menu-item">
+                <img src="{{ item.itemimage }}" alt="{{ item.itemname }}" class="item-image" >
+                <div class="item-details">
+                    <h2>{{ item.itemname }}</h2>
+                    <p>{{ item.itemdescription }}</p>
+                    <h4>Price: ₹{{ item.itemprice }}</h4>
+                    <h4>Discount: {{ item.itemdiscount }}%</h4>
+                    <div class="quantity-control">
+                        {% csrf_token %}
+                        <button class="add-to-cart" data-item-id="{{ item.id }}" data-user-id="{{ userid }}">🛒 Add to Cart</button>
+                        <button class="decrement" onclick="updateQuantity(this, -1)">-</button>
+                        <span class="quantity">0</span>
+                        <button class="increment" onclick="updateQuantity(this, 1)">+</button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </main>
+
+        <!-- Restaurant Details on the Right -->
+        <aside class="restaurant-details">
+            {% for res in restaurant %}
+            <div class="restaurant-card">
+                <h1>{{ res.restaurentname }}</h1>
+                <p>{{ res.restaurantaddress }}</p>
+            </div>
+            {% endfor %}
+        </aside>
+    </div>
+
+</body>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".menu-item").forEach(item => {
+        let countElement = item.querySelector(".quantity");
+        let increaseButton = item.querySelector(".increment");
+        let decreaseButton = item.querySelector(".decrement");
+        let addToCartButton = item.querySelector(".add-to-cart");
+        
+        let quantity = 1;  // Base quantity starts at 1
+        countElement.innerText = quantity;  // Set default value
+
+        // Increase Quantity
+        increaseButton.addEventListener("click", function () {
+            quantity++;
+            countElement.innerText = quantity;
+        });
+
+        // Decrease Quantity (Min 1)
+        decreaseButton.addEventListener("click", function () {
+            if (quantity > 1) {
+                quantity--;
+                countElement.innerText = quantity;
+            }
+        });
+
+        // Add to Cart Functionality
+        addToCartButton.addEventListener("click", function () {
+            let itemId = addToCartButton.getAttribute("data-item-id");
+            let userId = addToCartButton.getAttribute("data-user-id");
+
+            fetch("/add-to-cart/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "X-CSRFToken": getCSRFToken(),  // Fetch CSRF Token
+                },
+                body: `user_id=${userId}&item_id=${itemId}&quantity=${quantity}`,
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+            })
+            .catch(error => console.error("Error:", error));
+        });
+    });
+});
+
+// Function to Get CSRF Token for AJAX Requests
+function getCSRFToken() {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+        let cookies = document.cookie.split(";");
+        for (let i = 0; i < cookies.length; i++) {
+            let cookie = cookies[i].trim();
+            if (cookie.startsWith("csrftoken=")) {
+                cookieValue = cookie.substring("csrftoken=".length, cookie.length);
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>
+
+</html>

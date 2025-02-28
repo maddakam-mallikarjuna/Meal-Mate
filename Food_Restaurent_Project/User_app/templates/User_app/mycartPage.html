@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Cart</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'User_app/css/mycartPage.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo-container">
+            <img src="{% static 'images/Screenshot 2025-01-23 063742.ico' %}" alt="Logo" class="logo">
+        </div>
+        <span class="brand">Meal-Mate</span>
+        <div>
+        <a href="{% url 'userHome' user.id %}" class="back-button">Add More</a>
+        <a href="{% url 'Login' %}" class="logout">Logout</a>
+        </div>
+    </nav>
+
+    <div class="cart-container">
+        <h1>{{ user.username }}'s Cart</h1>
+
+        {% if cart %}
+        <table class="cart-table">
+            <thead>
+                <tr>
+                    <th>Item Image</th>
+                    <th>Item Name</th>
+                    <th>Price</th>
+                    <th>Discount</th>
+                    <th>Final Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cart_item in cart %}
+                <tr>
+                    <td><img src="{{ cart_item.item.itemimage }}" alt="{{ cart_item.item.itemname }}" class="cart-item-image"></td>
+                    <td>{{ cart_item.item.itemname }}</td>
+                    <td>₹{{ cart_item.item.itemprice|floatformat:2 }}</td>
+                    <td>{{ cart_item.item.itemdiscount }}%</td>
+                    <td>₹{{ cart_item.final_price|floatformat:2 }}</td>  <!-- Updated Line -->
+                    <td>{{ cart_item.quantity }}</td>
+                    <td>₹{{ cart_item.total|floatformat:2 }}</td>
+                    <td>
+                        <form method="POST" action="{% url 'remove_cart_item' user.id cart_item.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="remove-btn">❌</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Total Amount: ₹{{ total_amount|floatformat:2 }}</h2>
+        <form method="POST" action="{% url 'checkout' user.id %}">
+            {% csrf_token %}
+            <button type="submit" class="pay-btn">Proceed to Payment</button>
+        </form>
+        {% else %}
+        <h2>Your cart is empty.</h2>
+        {% endif %}
+    </div>
+</body>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    // Get CSRF token from cookies
+    function getCSRFToken() {
+        let cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            let cookie = cookies[i].trim();
+            if (cookie.startsWith("csrftoken=")) {
+                return cookie.split("=")[1];
+            }
+        }
+        return "";
+    }
+
+    document.querySelector(".pay-btn").addEventListener("click", async function (event) {
+        event.preventDefault();  // Prevent default form submission
+
+        let csrfToken = getCSRFToken();  // Fetch CSRF token
+
+        let response = await fetch("{% url 'checkout' user.id %}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrfToken  // ✅ Include CSRF token
+            }
+        });
+
+        let data = await response.json();
+
+        if (!data.order_id) {
+            alert("Failed to initiate payment.");
+            return;
+        }
+        let userId = "{{ user.id }}"
+
+        let options = {
+            "key": data.key,
+            "amount": data.amount,
+            "currency": data.currency,
+            "name": "Meal-Mate",
+            "description": "Order Payment",
+            "order_id": data.order_id,
+            "handler": function (response) {
+                alert("Payment Successful! ID: " + response.razorpay_payment_id);
+                window.location.href = `/success/${userId}/`;
+            },
+            "prefill": { "name": "{{ user.username }}", "email": "test@example.com" },
+            "theme": { "color": "#3399cc" }
+        };
+
+        let rzp = new Razorpay(options);
+        rzp.open();
+    });
+</script>
+
+
+</html>

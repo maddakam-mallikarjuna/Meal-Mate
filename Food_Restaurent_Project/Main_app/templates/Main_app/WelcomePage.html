@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% load static %}
+     <link rel="stylesheet" href="{% static 'Main_app/css/WelcomePage.css' %}">
+
+    <title>Meal-Mate</title>
+</head>
+<body>
+    <nav class="navbar">
+        <ul class="nav-list">
+            <li class="nav-item">
+                {% load static %}
+                <img src="{% static 'images/Screenshot 2025-01-23 063742.ico' %}"  alt="Logo" height="10px" class="logo">
+            </li>
+            <li class="nav-item" id="main">Meal-Mate</li>
+            <li class="nav-item" id="nav-login"><a href="{% url 'Login' %}">Login</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <h1 class="main-heading">Welcome to Meal-Mate</h1>
+        <pre class="dynamicPara"></pre>
+
+        <p class="main-description">
+                Welcome to <strong>Meal-Mate</strong> – your ultimate companion for food cravings!<br>
+                From mouthwatering meals and tasty snacks to refreshing cool drinks, we’ve got it all covered.<br>
+                Explore a wide range of cuisines, search for nearby restaurants, and get your favorites delivered straight to your doorstep.<br>
+                With Meal-Mate, satisfying your hunger is just a tap away – fast, easy, and oh-so-delicious!
+        </p>
+    </main>
+
+    <div class="container">
+        <div class="action">
+            <p class="action-text">New User! <br> Sign-up below</p>
+            <button class="action-btn"  type="button" onclick="window.location.href='{% url 'SignUp' %}' ">Sign Up</button>
+        </div>
+
+        <div class="action">
+            <p class="action-text">Have Account<br>Login below</p>
+            <button class="action-btn" type="button" onclick="window.location.href='{% url 'Login' %}'">Login</button>
+        </div>
+    </div>    
+</body>
+{% load static %}
+<script src="{% static 'Main_app/js/WelcomePage.js' %}"></script>
+</html>

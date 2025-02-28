@@ -1,0 +1,145 @@
+body {
+    padding: 1px;
+    margin: 0px;
+    height: 100vh;
+    text-align: center;
+    background-image: linear-gradient(484deg, rgba(238, 238, 238, 0.1),rgba(16, 16, 16, 0.1)),linear-gradient(532deg, rgb(202, 255, 50),rgb(223, 14, 20)); 
+    overflow: hidden;
+}
+
+.navbar {
+    padding: 1px;
+    height: 10vh;
+    color: #000;
+}
+
+.nav-list {
+    padding: 2px;
+    margin: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    list-style: none;
+}
+
+.nav-item {
+    padding: 2px;
+}
+
+.logo {
+    height: 9vmin;
+}
+
+#main {
+    padding: 0px;
+    margin: 2px 0px 0px 0px;
+    font: 2rem "Lucida Handwriting", cursive;
+    font-weight: 600;
+    color: red;
+    display: flex;
+}
+
+#nav-login {
+    padding: 1px;
+    margin-right: 1vmin;
+    height: 9vmin;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#nav-login a {
+    padding: 6px;
+    margin: 1px 10px 1px 1px;
+    height: 4vmin;
+    width: 10vmin;
+    border-radius: 4px;
+    font-size: 3vh;
+    color: #000000;
+    text-decoration: none;
+    border: 2px solid black;
+}
+
+#nav-login a:hover {
+    background-color: rgb(255, 0, 0); /* Set the initial state */
+    box-shadow: 1px 1px 8px red;
+    transition: background-color 1s linear; /* Use 'background-color' instead of 'anim' */
+}
+
+main {
+    padding: 1px;
+}
+
+.main-heading {
+    padding: 1px;
+    margin: 25px 0px 0px 0px;
+    font-size: 2rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: rgb(68, 68, 68);
+}
+
+.dynamicPara {
+    padding: 0;
+    margin: 0;
+    color: red;
+}
+
+.main-description {
+    padding: 1px;
+    margin: 4vh;
+}
+
+.container {
+    padding: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15vh;
+}
+
+.container .action {
+    padding: 1vh;
+    margin: 5px;
+    height: 30vh;
+    width: 40vh;
+    border: 2px solid black;
+    border-radius: 6%;
+    background-color: rgba(240, 248, 255, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.container .action:hover {
+    background-color: rgba(240, 248, 255, 0.4);
+}
+
+.action p {
+    padding: 1px;
+    margin: 10px;
+    color: #000;
+}
+
+.action-btn {
+    padding: 1vh;
+    margin: 1px;
+    border-radius: 6px;
+    width: 35%;
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.action-btn a {
+    text-decoration: none;
+    height: 100%;
+    width: 100%;
+    color: black;
+}
+
+.action-btn:hover {
+    background-color: rgba(255, 235, 205, 0.021);
+    box-shadow: 0px 0px 3px blanchedalmond;
+    transform: scale(1.01);
+    transition: background-color 0.2s linear;
+}

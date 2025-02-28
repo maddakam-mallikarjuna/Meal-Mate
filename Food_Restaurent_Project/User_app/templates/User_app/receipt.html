@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Receipt</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'User_app/css/receipt.css' %}">
+</head>
+<body>
+
+    <div class="main">
+    <div class="receipt-container">
+        <h2 class="receipt-title">🧾 Meal-Mate Receipt</h2>
+        <p class="receipt-info">Date: <strong>{{ cart_items.0.created_at|date:"d-M-Y H:i A" }}</strong></p>
+
+        <table class="receipt-table">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th>Discount</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                <tr>
+                    <td>{{ item.item.itemname }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>₹{{ item.item.itemprice }}</td>
+                    <td>{{ item.item.itemdiscount }}%</td>
+                    <td>₹{{ item.total }}</td>  <!-- Use precomputed total -->
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>        
+
+        <div class="totals">
+            <p>Subtotal: <span class="strike">₹{{ total_price }}</span></p>
+            <p>Discount Applied: <span class="discount">₹{{ total_discount }}</span></p>
+            <p class="final-total">Final Total: <strong>₹{{ final_total }}</strong></p>
+        </div>
+
+        <div class="thank-you">🎉 Thank you for ordering with Meal-Mate! 🎉</div>
+    </div>
+
+    <div class="btn-container">
+        <button class="btn btn-secondary btn-custom" onclick="history.back()">⬅ Go Back</button>
+        <button class="btn btn-primary btn-custom" onclick="window.print()">🖨 Print Receipt</button>
+    </div>
+</div>
+
+</body>
+</html>

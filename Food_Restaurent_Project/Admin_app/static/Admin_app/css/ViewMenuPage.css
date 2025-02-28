@@ -1,0 +1,236 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f5f5;
+}
+
+.container {
+    margin-top: 80px;
+    padding: 10px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f3500b;
+    padding: 15px 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.nav-logo img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.logo{
+    height: 50px;
+    animation: spinLogo 5s linear;
+}
+
+@keyframes spinLogo {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#main {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffcc00;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.nav-list {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    margin-right: 1em;
+}
+
+.nav-item a {
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    padding: 8px 16px;
+    border-radius: 5px;
+}
+
+.nav-item {
+    margin-right: 1em;
+}
+
+.nav-item a:hover {
+    background-color: #ffcc00;
+    color: black;
+}
+
+.menu-toggle {
+    font-size: 28px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: none;
+}
+
+.user-info {
+    position: sticky;
+    top: 85px;
+    max-width: 300px;
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    margin-left: auto;
+    margin-right: 2px;
+    z-index: 100;
+}
+
+.restaurant-table {
+    overflow-x: auto;
+    max-width: calc(100% - 350px);
+    flex-grow: 1;
+    text-align: center;
+    border-radius: 6px;
+    padding: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 5px;
+    overflow: hidden;
+    font-family: 'Arial', sans-serif;
+    margin-bottom: 1em;
+}
+
+th {
+    background-color: #003366;
+    color: #ffcc00;
+    padding: 12px;
+    text-transform: uppercase;
+}
+
+td {
+    padding: 10px;
+    text-align: center;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+    background-color: #f8f8f8;
+}
+
+tr:hover {
+    background-color: #ffeb99;
+    transition: 0.3s;
+}
+
+@media screen and (max-width: 1024px) {
+    .container {
+        flex-direction: column;
+    }
+    .user-info {
+        width: 90%;
+        margin: 10px auto;
+        text-align: center;
+        z-index: -1;
+    }
+    .restaurant-table {
+        max-width: 100%;
+        padding: 10px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+    .nav-list {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        right: 0;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        text-align: center;
+    }
+    .nav-list.active {
+        display: flex;
+    }
+    .user-info {
+        z-index: -1;
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .navbar {
+        flex-direction: column;
+        padding: 10px;
+    }
+    .nav-logo img {
+        width: 30px;
+        height: 30px;
+    }
+    #main {
+        font-size: 20px;
+    }
+    .user-info {
+        max-width: 100%;
+    }
+    .restaurant-table {
+        width: 100%;
+        padding: 5px;
+    }
+}
+
+#addres {
+    height: 40px;
+    width: 110px;
+    border-radius: 5px;
+    background-color: #333;
+}
+
+#addres a{
+    text-decoration: none;
+    color: rgb(239, 238, 238);
+    padding: 8px 0;
+    border-radius: 5px;
+}
+
+#addres:hover, #addres a:hover {
+    background-color: #333;
+    color: rgba(254, 254, 254, 0.637);
+    box-shadow: 0 0 1px 1px #333;
+}
+
+#del {
+    height: 40px;
+    width: 140px;
+    border-radius: 5px;
+    background-color: #333;
+}
+
+#del #del-a {
+    text-decoration: none;
+    color: rgb(239, 238, 238);
+    padding: 8px 0;
+    border-radius: 5px;
+}
+
+#del:hover, #del #del-a:hover {
+    background-color: #333;
+    color: rgba(254, 254, 254, 0.637);
+    box-shadow: 0 0 1px 1px #333;
+}

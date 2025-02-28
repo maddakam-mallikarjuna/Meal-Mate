@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'Admin_app/css/ViewMenuPage.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-logo">
+            {% load static %}
+            <img src="{% static 'images/Screenshot 2025-01-23 063742.ico' %}" alt="Favicon">
+        </div>
+        <div id="main">Meal-Mate</div>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        <ul class="nav-list">
+            <!-- <li class="nav-item"><a href="{% url 'addnewrestaurant' user.id %}">Add Restaurant</a></li> -->
+            <li class="nav-item"><a href="{% url 'Login' %}">Log-out</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <aside class="user-info">
+            <h3>Your Profile</h3>
+            <p><strong>Name:</strong> <i>{{user.username}}</i></p>
+            <p><strong>Email:</strong> {{user.email}}</p>
+            <p><strong>Address:</strong> {{user.address}}</p>
+        </aside>
+
+        <section class="restaurant-table">
+            {% if menus %}
+            <table border>
+                <tr>
+                    <th>Item name:</th>
+                    <th>Description:</th>
+                    <th>Item Picture:</th>
+                    <th>Item Style</th>
+                    <th>Price: </th>
+                    <th>Discount: </th>
+                </tr>
+                {% for menu in menus %}
+                <tr>
+                    <td>{{ menu.itemname }}</td>
+                    <td>{{ menu.itemdescription }}</td>
+                    <td id="imagerow"><img src="{{ menu.itemimage }}" alt="Image not Uploaded by owner" title="Restaurant: {{ restaurant.restaurentname}} "></td>
+                    <td>{{ menu.itemstyles}}</td>
+                    <td> $ {{ menu.itemprice }}</td>
+                    <td>{{ menu.itemdiscount }} %</td>
+                    <td><button id="del"><a id="del-a" href="{% url 'deletemenuitem' user.id restaurantid menu.id %}">Delete Item</a></button>
+                    <button id="del"><a id="del-a" href="{% url 'editmenuitem' user.id restaurantid menu.id %}">Edit Item</a></button></td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% else %}
+            <p>No Menu is Added by user</p>
+            {% endif %}
+            <button id="addres"><a href="{% url 'addmenuitemPage' user.id restaurantid %}">Add Menu Item</a></button>
+        </section>
+    </main>
+</body>
+
+<script>
+    function toggleMenu() {
+        let menu = document.querySelector(".nav-list");
+        menu.classList.toggle("active");
+    }
+</script>
+</html>
