@@ -29,7 +29,7 @@ This is a web application developed using Django that allows users to browse res
 ### Steps to Install
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/Arjun-0608/Meal-Mate.git
+   git clone https://github.com/maddakam-mallikarjuna/Meal-Mate.git
    cd Meal-Mate
    ```
 2. **Create a Virtual Environment**
